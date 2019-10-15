@@ -1,10 +1,9 @@
-import c from '../../helpers/data/color';
+import $ from 'jquery';
 import utilities from '../../helpers/utilities';
 
 import './cardList.scss';
 
-const cardListBuilder = () => {
-  const colors = c.getColors();
+const cardListBuilder = (colors) => {
   let domString = '';
   colors.forEach((color) => {
     domString += '<div class="col-3">';
@@ -18,4 +17,19 @@ const cardListBuilder = () => {
   utilities.printToDom('color-list', domString);
 };
 
-export default { cardListBuilder };
+const cardListEvents = () => {
+  $('body').on('mouseenter', '.card', (e) => {
+    $(e.target).children().removeClass('hide');
+  });
+
+  $('body').on('mouseleave', '.card', (e) => {
+    $(e.target).children().addClass('hide');
+  });
+
+  $('body').on('click', '.card', () => {
+    utilities.printToDom('color-list', '');
+    utilities.printToDom('single-color', 'this is a single item.  maybe we should call another component?');
+  });
+};
+
+export default { cardListBuilder, cardListEvents };
